@@ -514,3 +514,18 @@ class Image(object):
             return spyral.Vec2D((w - w2) / 2., (h - h2) / 2.)
         else:
             return spyral.Vec2D(anchor_type) - spyral.Vec2D(w2, h2)
+
+    def get_subimage_by_pos(self, x, y, width, height):
+        """
+        Make new image from larger image. Used for spritesheets.
+        The x and y coordinates are the top-left location of 
+        the subimage on your spritesheet. The width and height
+        are the dimensions of the new subimage.
+        """
+        subimage = _new_spyral_surface((width, height))
+        subimage.blit(self._surf, (0, 0), (x, y, width, height))
+
+        new_image = Image(size=(width, height))
+        new_image._surf = subimage
+
+        return new_image
